@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "RITMO",
+    "slug": "ritmo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "co.ritmo.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#10251A",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "co.ritmo.app",
+      "permissions": [
+        "CAMERA",
+        "POST_NOTIFICATIONS",
+        "VIBRATE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#10251A",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#72C267"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "RITMO usa la cámara para tu foto de perfil.",
+          "photosPermission": "RITMO usa tus fotos para tu foto de perfil."
+        }
+      ]
+    ],
+    "scheme": "ritmo",
+    "experiments": {
+      "typedRoutes": false
+    }
+  }
+}

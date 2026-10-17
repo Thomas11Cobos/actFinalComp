@@ -1,0 +1,34 @@
+def CENTRAL = 'https://maven-central-asia.storage-download.googleapis.com/maven2/'
+def GOOGLE = 'https://maven.google.com/'
+def fix = { repos ->
+  repos.all { r ->
+    if (r instanceof org.gradle.api.artifacts.repositories.MavenArtifactRepository) {
+      def u = r.url.toString()
+      if (u.contains('dl.google.com')) r.url = GOOGLE
+      else if (u.contains('repo.maven.apache.org') || u.contains('repo1.maven.org')) r.url = CENTRAL
+    }
+  }
+}
+def front = { repos ->
+  if (!repos.findByName('centralMirror')) {
+    boolean empty = repos.isEmpty()
+    def m = repos.maven { name = 'centralMirror'; url = CENTRAL }
+    repos.remove(m)
+    def g = repos.maven { name = 'googleMirror'; url = GOOGLE }
+    repos.remove(g)
+    repos.addFirst(g)
+    repos.addFirst(m)
+    if (empty) repos.gradlePluginPortal()
+  }
+}
+beforeSettings { s ->
+  front(s.pluginManagement.repositories)
+  fix(s.pluginManagement.repositories)
+  fix(s.dependencyResolutionManagement.repositories)
+  front(s.buildscript.repositories)
+}
+allprojects { p ->
+  front(p.buildscript.repositories)
+  fix(p.buildscript.repositories)
+  fix(p.repositories)
+}
